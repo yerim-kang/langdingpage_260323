@@ -103,7 +103,7 @@ $(function () {
 
     // 모션 최소화 설정이면 바로 표시
     if (reduceMotion) {
-      $sections.addClass('visible');
+      $sections.addClass('show');
       return;
     }
 

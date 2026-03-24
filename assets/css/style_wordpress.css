@@ -655,7 +655,7 @@
     height: 100%;
     padding: 100px 0;
     /* background: var(--bg-white); */
-    background: linear-gradient(rgba(0, 0, 0, 0.453), rgba(0, 0, 0, 0.372)),url('../images/trust-bg.png');
+    background: linear-gradient(rgba(0, 0, 0, 0.453), rgba(0, 0, 0, 0.372)),url('/wp-content/uploads/2026/03/trust-bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -771,27 +771,27 @@
     border-color: var(--accent);
     box-shadow: var(--shadow);
     transform: translateY(-4px);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('../images/service-img1.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('/wp-content/uploads/2026/03/service-img1.jpg');
   }
 
   .service-card2:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('../images/service-img2.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('/wp-content/uploads/2026/03/service-img2.jpg');
   }
 
   .service-card3:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('../images/service-img3.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('/wp-content/uploads/2026/03/service-img3.jpg');
   }
 
   .service-card4:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('../images/service-img4.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('/wp-content/uploads/2026/03/service-img4.jpg');
   }
 
   .service-card5:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('../images/service-img5.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('/wp-content/uploads/2026/03/service-img5.jpg');
   }
 
   .service-card6:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('../images/service-img6.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.669), rgba(0, 0, 0, 0.816)),url('/wp-content/uploads/2026/03/service-img4.jpg');
   }
 
   .service-card:hover {
@@ -1231,7 +1231,7 @@
   .lawyer {
     padding: 100px 0;
     /* background: var(--bg-white); */
-    background-image: url('../images/lawyer-bg.jpg');
+    background-image: url('/wp-content/uploads/2026/03/lawyer-bg-scaled.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1501,7 +1501,7 @@
   .review {
     padding: 100px 0;
     /* background: #F8FAFC; */
-    background-image: url('../images/review-bg.jpg');
+    background-image: url('/wp-content/uploads/2026/03/review-bg-scaled.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1737,7 +1737,7 @@
   .consult {
     padding: 100px 0;
     /* background: var(--bg-white); */
-    background: linear-gradient(rgba(9, 8, 37, 0.545), rgba(8, 4, 34, 0.497)),url('../images/consult-bg.png');
+    background: linear-gradient(rgba(9, 8, 37, 0.545), rgba(8, 4, 34, 0.497)),url('/wp-content/uploads/2026/03/consult-bg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
