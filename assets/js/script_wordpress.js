@@ -1,4 +1,10 @@
+/**
+ * 법무법인 랜딩 (WordPress용)
+ * - 아래 블록은 이전 버전 전체를 보존한 주석입니다.
+ * - 활성 코드는 jQuery noConflict 환경에 맞춘 최신 버전입니다.
+ */
 
+/*
 $(function () {
   var $window = $(window);
   var $header = $('#header');
@@ -352,4 +358,388 @@ $(function () {
     });
   })();
 });
+*/
 
+// WordPress: jQuery는 noConflict이므로 $를 인자로 받습니다.
+jQuery(function ($) {
+  var $window = $(window);
+  var $header = $('#header');
+  var $hero = $('#hero');
+  var $mobileMenuBtn = $('#mobileMenuBtn');
+  var $navMobile = $('.nav-mobile');
+  var $floatActions = $('.float-actions');
+  var $scrollTopBtn = $('#scrollTop');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // -------------------------
+  // 1. 모바일 메뉴
+  // -------------------------
+  $mobileMenuBtn.on('click', function () {
+    $(this).toggleClass('active');
+    $navMobile.toggleClass('active');
+
+    if ($navMobile.hasClass('active')) {
+      $(this).attr('aria-expanded', 'true');
+    } else {
+      $(this).attr('aria-expanded', 'false');
+    }
+  });
+
+  // 모바일 메뉴 링크 클릭하면 닫기
+  $navMobile.find('a').on('click', function () {
+    $navMobile.removeClass('active');
+    $mobileMenuBtn.removeClass('active');
+    $mobileMenuBtn.attr('aria-expanded', 'false');
+  });
+
+  // 화면 커지면 모바일 메뉴 닫기
+  $window.on('resize', function () {
+    if (window.innerWidth > 1024) {
+      $navMobile.removeClass('active');
+      $mobileMenuBtn.removeClass('active');
+      $mobileMenuBtn.attr('aria-expanded', 'false');
+    }
+  });
+
+  // -------------------------
+  // 2. 헤더 스크롤 스타일
+  // -------------------------
+  function changeHeader() {
+    if ($header.length) {
+      if (window.scrollY > 50) {
+        $header.addClass('scrolled');
+      } else {
+        $header.removeClass('scrolled');
+      }
+    }
+  }
+
+  changeHeader();
+  $window.on('scroll', changeHeader);
+
+  // -------------------------
+  // 3. 히어로 배경 자동 전환
+  // -------------------------
+  var $heroSlides = $('.hero-slide');
+  var currentSlide = 0;
+
+  if ($heroSlides.length && !reduceMotion) {
+    setInterval(function () {
+      $heroSlides.eq(currentSlide).removeClass('is-active');
+
+      currentSlide++;
+      if (currentSlide >= $heroSlides.length) {
+        currentSlide = 0;
+      }
+
+      $heroSlides.eq(currentSlide).addClass('is-active');
+    }, 5500);
+  }
+
+  // -------------------------
+  // 4. 히어로 텍스트 애니메이션
+  // -------------------------
+  if (window.gsap && !reduceMotion) {
+    gsap.from(
+      ['.hero-badge', '.hero-title', '.hero-sub', '.hero-actions', '.quick-contact', '.hero-stats'],
+      {
+        y: 40,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.14,
+        ease: 'power3.out',
+        delay: 0.2,
+        clearProps: 'transform,opacity'
+      }
+    );
+  }
+
+  // -------------------------
+  // 5. 스크롤 시 reveal 요소 보이기 (CSS는 .reveal.visible)
+  // -------------------------
+  var $reveal = $('.reveal');
+
+  function showReveal() {
+    var winBottom = $window.scrollTop() + $window.height() * 0.9;
+
+    $reveal.each(function () {
+      var $this = $(this);
+
+      if ($this.hasClass('visible')) {
+        return;
+      }
+
+      if ($this.offset().top < winBottom) {
+        $this.addClass('visible');
+      }
+    });
+  }
+
+  if ($reveal.length) {
+    if (reduceMotion) {
+      $reveal.addClass('visible');
+    } else {
+      showReveal();
+      $window.on('scroll resize', showReveal);
+    }
+  }
+
+  // -------------------------
+  // 6. 숫자 카운터
+  // -------------------------
+  var $counters = $('[data-count]');
+
+  function startCounter($target) {
+    var targetNumber = parseInt($target.attr('data-count'), 10) || 0;
+
+    $({ number: 0 }).animate(
+      { number: targetNumber },
+      {
+        duration: 2000,
+        easing: 'swing',
+        step: function (now) {
+          $target.text(Math.floor(now).toLocaleString());
+        },
+        complete: function () {
+          $target.text(targetNumber.toLocaleString());
+        }
+      }
+    );
+  }
+
+  function checkCounter() {
+    var winBottom = $window.scrollTop() + $window.height() * 0.85;
+
+    $counters.each(function () {
+      var $this = $(this);
+
+      if ($this.data('counted')) {
+        return;
+      }
+
+      if ($this.offset().top < winBottom) {
+        $this.data('counted', true);
+        startCounter($this);
+      }
+    });
+  }
+
+  if ($counters.length) {
+    checkCounter();
+    $window.on('scroll resize', checkCounter);
+  }
+
+  // -------------------------
+  // 7. FAQ 아코디언
+  // -------------------------
+  $('.faq-question').on('click', function () {
+    var $question = $(this);
+    var $item = $question.parent();
+    var $answer = $item.find('.faq-answer').first();
+
+    // 이미 열려 있으면 닫기
+    if ($item.hasClass('active')) {
+      $item.removeClass('active');
+      $question.attr('aria-expanded', 'false');
+      $answer.css('max-height', '0');
+      return;
+    }
+
+    // 다른 FAQ 닫기
+    $('.faq-item').removeClass('active');
+    $('.faq-question').attr('aria-expanded', 'false');
+    $('.faq-answer').css('max-height', '0');
+
+    // 현재 FAQ 열기
+    $item.addClass('active');
+    $question.attr('aria-expanded', 'true');
+    $answer.css('max-height', $answer[0].scrollHeight + 'px');
+  });
+
+  // 엔터, 스페이스 키로도 열리게
+  $('.faq-question').on('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      $(this).trigger('click');
+    }
+  });
+
+  // -------------------------
+  // 8. 플로팅 버튼 보이기
+  // -------------------------
+  function showFloatButtons() {
+    var show = false;
+
+    if ($hero.length) {
+      var headerHeight = $header.outerHeight() || 72;
+      var heroBottom = $hero[0].getBoundingClientRect().bottom;
+
+      if (heroBottom <= headerHeight + 4) {
+        show = true;
+      }
+    } else {
+      if (window.scrollY > 600) {
+        show = true;
+      }
+    }
+
+    if (show) {
+      $floatActions.addClass('visible');
+    } else {
+      $floatActions.removeClass('visible');
+    }
+  }
+
+  showFloatButtons();
+  $window.on('scroll resize', showFloatButtons);
+
+  // 맨 위로 버튼
+  $scrollTopBtn.on('click', function () {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+
+  // -------------------------
+  // 9. 앵커 부드러운 스크롤
+  // -------------------------
+  $('a[href^="#"]').on('click', function (e) {
+    var href = $(this).attr('href');
+
+    if (!href || href === '#') {
+      return;
+    }
+
+    var $target = $(href);
+
+    if (!$target.length) {
+      return;
+    }
+
+    e.preventDefault();
+
+    var targetTop = $target.offset().top - 72;
+
+    window.scrollTo({
+      top: targetTop,
+      behavior: 'smooth'
+    });
+  });
+
+  // -------------------------
+  // 10. 전화번호 자동 하이픈
+  // -------------------------
+  $('#phone, #quickPhone').on('input', function () {
+    var value = $(this).val().replace(/\D/g, '');
+
+    if (value.length > 3 && value.length <= 7) {
+      value = value.slice(0, 3) + '-' + value.slice(3);
+    } else if (value.length > 7) {
+      value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+    }
+
+    $(this).val(value);
+  });
+
+  // -------------------------
+  // 11. 폼 버튼 문구 변경
+  // -------------------------
+  function changeSubmitState(formSelector, buttonSelector, completeText, delayTime) {
+    var $form = $(formSelector);
+    var $button = $form.find(buttonSelector).first();
+    var originalText = $button.text();
+
+    $button.text(completeText);
+    $button.css('background', 'var(--accent)');
+    $button.prop('disabled', true);
+
+    setTimeout(function () {
+      $button.text(originalText);
+      $button.css('background', '');
+      $button.prop('disabled', false);
+
+      if ($form.length) {
+        $form[0].reset();
+      }
+    }, delayTime);
+  }
+
+  window.handleSubmit = function (e) {
+    e.preventDefault();
+    changeSubmitState('#consultForm', '.form-submit', '신청이 완료되었습니다', 3000);
+    return false;
+  };
+
+  window.handleQuickSubmit = function (e) {
+    e.preventDefault();
+    changeSubmitState('#mobileQuickForm', '.mobile-quick-submit', '접수 완료', 2500);
+    return false;
+  };
+
+  // -------------------------
+  // 12. 리뷰 스와이퍼
+  // -------------------------
+  if ($('.review-swiper').length && window.Swiper) {
+    new window.Swiper($('.review-swiper').get(0), {
+      slidesPerView: 1,
+      slidesPerGroup: 1,
+      spaceBetween: 16,
+      centeredSlides: true,
+      loop: true,
+      speed: reduceMotion ? 0 : 600,
+      autoHeight: true,
+      grabCursor: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false
+      },
+      effect: 'coverflow',
+      coverflowEffect: {
+        rotate: 0,
+        stretch: 0,
+        depth: 180,
+        modifier: 1,
+        slideShadows: false
+      },
+      pagination: {
+        el: '.review-pagination',
+        clickable: true
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 24
+        }
+      }
+    });
+  }
+
+  // -------------------------
+  // 13. 사례 스와이퍼
+  // -------------------------
+  if ($('.case-swiper').length && window.Swiper) {
+    new window.Swiper($('.case-swiper').get(0), {
+      slidesPerView: 1,
+      slidesPerGroup: 1,
+      spaceBetween: 24,
+      loop: true,
+      speed: reduceMotion ? 0 : 600,
+      grabCursor: true,
+      navigation: {
+        nextEl: '.case-swiper-next',
+        prevEl: '.case-swiper-prev'
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 1,
+          spaceBetween: 16
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 24
+        }
+      }
+    });
+  }
+});

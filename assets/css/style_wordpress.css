@@ -1,3 +1,9 @@
+.elementor-section,
+.e-con {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 @font-face {
   font-family: 'Pretendard';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Thin.woff2') format('woff2');
@@ -205,6 +211,7 @@
     color: var(--text-secondary);
     line-height: 1.7;
     max-width: 600px;
+		word-break: keep-all;
   }
 
   /* ===== Buttons (shared) ===== */
@@ -319,10 +326,11 @@
   }
 
   .logo {
-    font-size: 1.375rem;
+    /* font-size: 1.375rem;
     font-weight: 800;
     color: #fff;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.03em; */
+    width: 50px;
   }
 
   .logo span {
@@ -486,6 +494,7 @@
     letter-spacing: -0.03em;
     margin-bottom: 24px;
     max-width: 700px;
+		word-break: keep-all;
   }
 
   .hero-title em {
@@ -499,6 +508,7 @@
     line-height: 1.7;
     margin-bottom: 40px;
     max-width: 540px;
+		word-break: keep-all;
   }
 
   .hero-actions {
@@ -587,10 +597,12 @@
 
   .urgency-inner {
     text-align: center;
+		word-break: keep-all;
   }
 
   .urgency h2 {
     font-family: 'A2z';
+		word-break: keep-all;
   }
 
   .urgency-icon {
@@ -871,6 +883,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 40px;
     align-items: stretch;
+		height: 680px;
   }
 
   .advantage-image {
@@ -1097,6 +1110,7 @@
   .case-swiper .case-card {
     width: 100%;
     height: 100%;
+	  min-height: 360px;
     display: flex;
     flex-direction: column;
   }
@@ -1580,6 +1594,7 @@
     border-radius: var(--radius);
     padding: 32px;
     transition: var(--transition);
+		min-height: 250px;
   }
 
   .review-card:hover {
@@ -1605,6 +1620,12 @@
     color: var(--text);
     margin: 0 0 20px;
     quotes: none;
+		word-break: keep-all;
+		overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
 
   .review-meta {
@@ -1756,6 +1777,7 @@
     color: var(--blue-bright);
     margin-bottom: 16px;
     line-height: 1.4;
+		word-break: keep-all;
   }
 
   .consult-left p {
@@ -1763,6 +1785,7 @@
     color: var(--bg-white);
     margin-bottom: 32px;
     line-height: 1.7;
+		word-break: keep-all;
   }
 
   .consult-info {
@@ -1928,10 +1951,11 @@
   }
 
   .footer-logo {
-    font-size: 1.375rem;
+    /* font-size: 1.375rem;
     font-weight: 800;
     color: #fff;
-    margin-bottom: 16px;
+    margin-bottom: 16px; */
+    width: 50px;
   }
 
   .footer-logo span { color: var(--cta); }
@@ -2283,6 +2307,7 @@
       text-align: center;
       gap: 10px;
       align-items: center;
+			padding: 0;
     }
 
     .mid-cta--remote h2 {
@@ -2368,6 +2393,7 @@
 
     .section-title {
       font-size: 1.625rem;
+			word-break: keep-all;
     }
 
     .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -2380,6 +2406,7 @@
       grid-template-columns: 1fr;
       gap: 24px;
       align-items: center;
+			height: auto;
     }
     .advantage-image {
       height: auto;
@@ -2498,9 +2525,45 @@
     }
     .btn-color,
     .btn-outline { width: 100%; }
-    .trust-grid { grid-template-columns: repeat(2, 1fr); }
+		.case-more-btn, .review-more-btn {
+			padding: 12px 18px;
+		}
+		.urgency-inner h2 {
+			font-size : 1.4rem;
+		}
+    .trust-grid { 
+			grid-template-columns: repeat(1, 1fr);
+		}
+    .btn-outline { width: 100%; }
     .trust-card { padding: 24px 16px; }
-  }
+  
+	.consult-form-card {
+		padding: 20px;
+	}
+	/* .consult-left h2 {
+		font-size: 1.7rem;
+	} */
+	/* .consult-left p{
+		font-size: 1rem;
+	} */
+
+	.mobile-quick-row {
+		grid-template-columns: 1fr;
+	}
+
+	.mobile-quick-actions {
+		flex-direction: column;
+		align-items: start;
+	}
+
+	.mobile-quick-submit {
+		width: 100%;
+		padding: 12px 18px;
+	}
+		
+		.float-actions {
+			bottom: 230px;
+		}
 
   /* Border-radius reset (cards/buttons) */
   .trust-card,
@@ -2523,3 +2586,9 @@
   .case-result {
     border-radius: 0 !important;
   }
+}
+
+
+.elementor-element, .elementor-element-78be949, .e-con-full, .e-flex, .e-con, .e-parent, .e-lazyloaded {
+	padding: 0;
+}
