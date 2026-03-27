@@ -360,16 +360,15 @@ $(function () {
 });
 */
 
-// WordPress: jQuery는 noConflict이므로 $를 인자로 받습니다.
-jQuery(function ($) {
-  var $window = $(window);
-  var $header = $('#header');
-  var $hero = $('#hero');
-  var $mobileMenuBtn = $('#mobileMenuBtn');
-  var $navMobile = $('.nav-mobile');
-  var $floatActions = $('.float-actions');
-  var $scrollTopBtn = $('#scrollTop');
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+$(function () {
+  const $window = $(window);
+  const $header = $('#header');
+  const $hero = $('#hero');
+  const $mobileMenuBtn = $('#mobileMenuBtn');
+  const $navMobile = $('.nav-mobile');
+  const $floatActions = $('.float-actions');
+  const $scrollTopBtn = $('#scrollTop');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // -------------------------
   // 1. 모바일 메뉴
@@ -406,7 +405,7 @@ jQuery(function ($) {
   // -------------------------
   function changeHeader() {
     if ($header.length) {
-      if (window.scrollY > 50) {
+      if (window.scrollY > 600) {
         $header.addClass('scrolled');
       } else {
         $header.removeClass('scrolled');
@@ -420,8 +419,8 @@ jQuery(function ($) {
   // -------------------------
   // 3. 히어로 배경 자동 전환
   // -------------------------
-  var $heroSlides = $('.hero-slide');
-  var currentSlide = 0;
+  const $heroSlides = $('.hero-slide');
+  let currentSlide = 0;
 
   if ($heroSlides.length && !reduceMotion) {
     setInterval(function () {
@@ -455,15 +454,15 @@ jQuery(function ($) {
   }
 
   // -------------------------
-  // 5. 스크롤 시 reveal 요소 보이기 (CSS는 .reveal.visible)
+  // 5. 스크롤 시 reveal 요소 보이기
   // -------------------------
-  var $reveal = $('.reveal');
+  const $reveal = $('.reveal');
 
   function showReveal() {
-    var winBottom = $window.scrollTop() + $window.height() * 0.9;
+    let winBottom = $window.scrollTop() + $window.height() * 0.9;
 
     $reveal.each(function () {
-      var $this = $(this);
+      const $this = $(this);
 
       if ($this.hasClass('visible')) {
         return;
@@ -487,10 +486,10 @@ jQuery(function ($) {
   // -------------------------
   // 6. 숫자 카운터
   // -------------------------
-  var $counters = $('[data-count]');
+  const $counters = $('[data-count]');
 
   function startCounter($target) {
-    var targetNumber = parseInt($target.attr('data-count'), 10) || 0;
+    const targetNumber = parseInt($target.attr('data-count'), 10) || 0;
 
     $({ number: 0 }).animate(
       { number: targetNumber },
@@ -508,10 +507,10 @@ jQuery(function ($) {
   }
 
   function checkCounter() {
-    var winBottom = $window.scrollTop() + $window.height() * 0.85;
+    let winBottom = $window.scrollTop() + $window.height() * 0.85;
 
     $counters.each(function () {
-      var $this = $(this);
+      const $this = $(this);
 
       if ($this.data('counted')) {
         return;
@@ -533,9 +532,9 @@ jQuery(function ($) {
   // 7. FAQ 아코디언
   // -------------------------
   $('.faq-question').on('click', function () {
-    var $question = $(this);
-    var $item = $question.parent();
-    var $answer = $item.find('.faq-answer').first();
+    const $question = $(this);
+    const $item = $question.parent();
+    const $answer = $item.find('.faq-answer').first();
 
     // 이미 열려 있으면 닫기
     if ($item.hasClass('active')) {
@@ -568,11 +567,11 @@ jQuery(function ($) {
   // 8. 플로팅 버튼 보이기
   // -------------------------
   function showFloatButtons() {
-    var show = false;
+    let show = false;
 
     if ($hero.length) {
-      var headerHeight = $header.outerHeight() || 72;
-      var heroBottom = $hero[0].getBoundingClientRect().bottom;
+      const headerHeight = $header.outerHeight() || 72;
+      const heroBottom = $hero[0].getBoundingClientRect().bottom;
 
       if (heroBottom <= headerHeight + 4) {
         show = true;
@@ -605,13 +604,13 @@ jQuery(function ($) {
   // 9. 앵커 부드러운 스크롤
   // -------------------------
   $('a[href^="#"]').on('click', function (e) {
-    var href = $(this).attr('href');
+    const href = $(this).attr('href');
 
     if (!href || href === '#') {
       return;
     }
 
-    var $target = $(href);
+    const $target = $(href);
 
     if (!$target.length) {
       return;
@@ -619,7 +618,7 @@ jQuery(function ($) {
 
     e.preventDefault();
 
-    var targetTop = $target.offset().top - 72;
+    const targetTop = $target.offset().top - 72;
 
     window.scrollTo({
       top: targetTop,
@@ -631,7 +630,7 @@ jQuery(function ($) {
   // 10. 전화번호 자동 하이픈
   // -------------------------
   $('#phone, #quickPhone').on('input', function () {
-    var value = $(this).val().replace(/\D/g, '');
+    let value = $(this).val().replace(/\D/g, '');
 
     if (value.length > 3 && value.length <= 7) {
       value = value.slice(0, 3) + '-' + value.slice(3);
@@ -646,9 +645,9 @@ jQuery(function ($) {
   // 11. 폼 버튼 문구 변경
   // -------------------------
   function changeSubmitState(formSelector, buttonSelector, completeText, delayTime) {
-    var $form = $(formSelector);
-    var $button = $form.find(buttonSelector).first();
-    var originalText = $button.text();
+    const $form = $(formSelector);
+    const $button = $form.find(buttonSelector).first();
+    const originalText = $button.text();
 
     $button.text(completeText);
     $button.css('background', 'var(--accent)');
@@ -681,7 +680,7 @@ jQuery(function ($) {
   // 12. 리뷰 스와이퍼
   // -------------------------
   if ($('.review-swiper').length && window.Swiper) {
-    new window.Swiper($('.review-swiper').get(0), {
+    new Swiper('.review-swiper', {
       slidesPerView: 1,
       slidesPerGroup: 1,
       spaceBetween: 16,
@@ -719,7 +718,7 @@ jQuery(function ($) {
   // 13. 사례 스와이퍼
   // -------------------------
   if ($('.case-swiper').length && window.Swiper) {
-    new window.Swiper($('.case-swiper').get(0), {
+    new Swiper('.case-swiper', {
       slidesPerView: 1,
       slidesPerGroup: 1,
       spaceBetween: 24,
